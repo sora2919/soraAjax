@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Travel";
+}
+
+<h1>Travel</h1>
+
+<button id="btn" class="btn btn-primary">click</button>
+<div id="div1" class="alert alert-info"></div>
+
+
+@section Scripts{
+    <script src="~/datas/travel.js"></script>
+    <script>
+        const xhr = new XMLHttpRequest();
+
+        btn.addEventListener('click', () => {
+        xhr.open("GET", "/datas/travel.js", true);
+        xhr.send();
+        xhr.addEventListener('load', () => {
+                const DATAS = xhr.responseText
+                div1.innerHTML = `<h3>${DATAS}</h3>`
+            console.log(DATAS)
+
+            })
+
+        })
+    </script>
+}
+
+@section Styles{
+
+}
