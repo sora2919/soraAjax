@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "First";
+}
+
+<h1>First</h1>
+
+<button id="btn" class="btn btn-primary">click</button>
+<div id="div1" class="alert alert-info"></div>
+
+
+
+
+@section Scripts{
+    <script>
+        const btn = document.querySelector('#btn')
+        const myDiv = document.querySelector('#div1')
+
+        //步驟1 開啟一個XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+
+        btn.addEventListener('click',()=>{
+            //myDiv.innerHTML="Button Click"
+
+            //步驟2 對伺服器發出要求(Request)
+            xhr.open('GET', '/api/index');//這個類似只有打網址，還沒按下enter
+            xhr.send();//這步驟才等於有按下送出
+
+            //步驟3 接收伺服器回傳的資料 下面的load事件是xhr.send()發出後，回傳的資料確定有下載完成才會出現的事件
+            xhr.addEventListener('load',()=>{
+                const data = xhr.responseText//步驟4 讀資料 因為這邊是純string所以responseText，如果是XML就要responseXML
+                //步驟5 顯示資料
+                myDiv.innerHTML = `<h3>${data}</h3>`
+            })
+
+
+        })
+
+    </script>
+}

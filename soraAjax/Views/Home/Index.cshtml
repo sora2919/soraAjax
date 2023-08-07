@@ -6,6 +6,17 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<table id="empTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年資</th>
+            <th>薪水</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 
 
@@ -17,9 +28,30 @@ p{background:lightblue}
 
 @section Scripts{
     <script>
-        $('.display-4').on('mouseover',function(){
-            $(this).css('color','blue')
-        }).on('mouseout', function () {
-            $(this).css('color', 'red')})
+        const emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+
+        //for (let i = 0, max = emp.employees.length; i < max; i++) {
+        //    console.log(emp.employees[i].name)
+        //    console.log(emp.employees[i].workYears)
+        //    console.log(emp.employees[i].salary)
+        //}
+
+        const datas=emp.employees.map(employee=>{
+            //const { name, workYears, salary } = employee 物件解構賦值 加這行後面的${employee.name}就可以省略掉employee直接用${name}
+        return(
+        `<tr>
+               <td>${employee.name}</td>
+               <td>${employee.workYears}</td>
+               <td>${employee.salary}</td>
+        </tr>`)
+        })
+        document.querySelector('#empTable>tbody').innerHTML = datas.join("")
+
     </script>
-}
+        }
