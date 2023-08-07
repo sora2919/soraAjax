@@ -28,6 +28,7 @@ p{background:lightblue}
 
 @section Scripts{
     <script>
+
         const emp = {
             "employees": [
                 { "name": "Tom", "workYears": 3, "salary": 35000 },
@@ -35,23 +36,34 @@ p{background:lightblue}
                 { "name": "Mary", "workYears": 7, "salary": 45000 }
             ]
         };
+        //JavaScript寫法
+        ////for (let i = 0, max = emp.employees.length; i < max; i++) {
+        ////    console.log(emp.employees[i].name)
+        ////    console.log(emp.employees[i].workYears)
+        ////    console.log(emp.employees[i].salary)
+        ////}
 
-        //for (let i = 0, max = emp.employees.length; i < max; i++) {
-        //    console.log(emp.employees[i].name)
-        //    console.log(emp.employees[i].workYears)
-        //    console.log(emp.employees[i].salary)
-        //}
+        //const datas=emp.employees.map(employee=>{
+        //    //const { name, workYears, salary } = employee 物件解構賦值 加這行後面的${employee.name}就可以省略掉employee直接用${name}
+        //return(
+        //`<tr>
+        //       <td>${employee.name}</td>
+        //       <td>${employee.workYears}</td>
+        //       <td>${employee.salary}</td>
+        //</tr>`)
+        //})
+        //document.querySelector('#empTable>tbody').innerHTML = datas.join("")
 
-        const datas=emp.employees.map(employee=>{
-            //const { name, workYears, salary } = employee 物件解構賦值 加這行後面的${employee.name}就可以省略掉employee直接用${name}
-        return(
-        `<tr>
-               <td>${employee.name}</td>
-               <td>${employee.workYears}</td>
-               <td>${employee.salary}</td>
-        </tr>`)
-        })
-        document.querySelector('#empTable>tbody').innerHTML = datas.join("")
+        //JQuery寫法
+        const $employees = $.map(emp.employees, function (employee) {
+            return $(`<tr>
+                        <td>${employee.name}</td>
+                        <td>${employee.workYears}</td>
+                        <td>${employee.salary}</td>
+                     </tr>`);
+        });
+        $('#empTable>tbody').append($employees);
+
 
     </script>
         }
