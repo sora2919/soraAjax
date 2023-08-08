@@ -14,7 +14,7 @@
                 @*接下來要用設定XMLHttpRequest屬性的方式來設定POST*@
             <div class="mb-3">
                 <label for="userName" class="form-label">User Name：</label> @*for與下面的input id相同，可以點上面的label文字就將游標移到input裡*@
-                <input type="text" class="form-control" id="userName" name="Name">
+                <input type="text" class="form-control" id="userName" name="Name"><span id="nameWarn" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="userEmail" class="form-label">User Email：</label> 
@@ -55,6 +55,8 @@
 
         const theA = document.querySelector('#a1')
 
+        const nameCheck = document.querySelector('#userName')
+
         btn.addEventListener('click', event => {
             event.preventDefault(); //防止預設行為的發生 這邊是防止用預設的GET方式傳資料出去
             const xhr = new XMLHttpRequest();
@@ -81,6 +83,23 @@
             }
         })
 
+        nameCheck.addEventListener('blur',(e)=>{
+            const name=e.target.value
+            const xhr=new XMLHttpRequest();
+                xhr.open('GET', `/api/CheckName?name=${name}`);
+                xhr.send();
+
+                xhr.addEventListener('load',()=>{
+                    const data=xhr.responseText;
+                    const warn = document.querySelector("#nameWarn")
+                if (data=='true'){
+                    warn.textContent = '此名稱已有人使用'
+                }
+                else{
+                    warn.textContent='此名稱可使用'
+                }
+            })
+        })
 
     </script>
 }

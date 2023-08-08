@@ -61,5 +61,13 @@ namespace soraAjax.Controllers
 
             return Content("新增成功!!");
         }
+
+        public IActionResult CheckName(string name)//HW3 確認是否有重複名字
+        {
+            var hasName=_context.Members.FirstOrDefault(n=>n.Name == name);
+
+            if (hasName != null) { return Content("true"); }
+            else { return Content("false"); }
+        }
     }
 }
