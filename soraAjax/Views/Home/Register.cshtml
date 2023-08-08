@@ -8,7 +8,9 @@
 <div class="row">
     <div class="col-3"></div>
     <div class="col-6">
-        <form action="~/api/getdemo" method="post" enctype="application/x-www-form-urlencoded">@*method不寫的話預設是GET*@
+        @*<form action="~/api/getdemo" method="post" enctype="application/x-www-form-urlencoded">method不寫的話預設是GET*@
+
+            <form>@*接下來要用設定XMLHttpRequest屬性的方式來設定POST*@
             <div class="mb-3">
                 <label for="userName" class="form-label">User Name：</label> @*for與下面的input id相同，可以點上面的label文字就將游標移到input裡*@
                 <input type="text" class="form-control" id="userName" name="name">
@@ -17,13 +19,39 @@
                 <label for="userAge" class="form-label">User Age：</label>
                 <input type="number" class="form-control" id="userAge" name="age">
             </div>
-            <button type="submit" class="btn btn-primary">送出</button>
+            <button id="btnSub" type="submit" class="btn btn-primary">送出</button>
             @*送出後可以F12在NETWORK中看到Request URL已經轉到/api/getdemo
             Request Method是POST
             Content-Type 預設application/x-www-form-urlencoded
             payload可以看到傳遞的封包
             *@
         </form>
+        <div class="alert alert-info" id="div1"></div>
     </div>
     <div class="col-3"></div>
 </div>
+
+@section Styles{
+    <style></style>
+}
+
+@section Scripts{
+    <script>
+        const btn = document.querySelector('#btnSub');
+        const txtName = document.querySelector('#userName')
+        const txtAge = document.querySelector('#userAge')
+        const theDiv = document.querySelector('#div1')
+        btn.addEventListener('click', event => {
+            event.preventDefault(); //防止預設行為的發生 這邊是防止用預設的GET方式傳資料出去
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/getdemo');//step1 open中第一參數改為POST，第二參數則放要執行的action
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')//step2 在open send間設定setRequestHeader的屬性(上面現在預設是GET)
+            xhr.send(`name=${txtName.value}&age=${txtAge.value}`);//step3 要傳送到伺服器端的資料放到send裡面
+            xhr.addEventListener('load', () => {
+                const data = xhr.responseText;
+                theDiv.innerHTML = data;
+            })
+
+        })
+    </script>
+}
