@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <form action="~/api/getdemo" method="post" enctype="application/x-www-form-urlencoded">@*method不寫的話預設是GET*@
+            <div class="mb-3">
+                <label for="userName" class="form-label">User Name：</label> @*for與下面的input id相同，可以點上面的label文字就將游標移到input裡*@
+                <input type="text" class="form-control" id="userName" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="userAge" class="form-label">User Age：</label>
+                <input type="number" class="form-control" id="userAge" name="age">
+            </div>
+            <button type="submit" class="btn btn-primary">送出</button>
+            @*送出後可以F12在NETWORK中看到Request URL已經轉到/api/getdemo
+            Request Method是POST
+            Content-Type 預設application/x-www-form-urlencoded
+            payload可以看到傳遞的封包
+            *@
+        </form>
+    </div>
+    <div class="col-3"></div>
+</div>
