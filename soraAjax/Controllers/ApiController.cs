@@ -34,18 +34,32 @@ namespace soraAjax.Controllers
 
         public IActionResult Register(Members member,IFormFile file)//使用IFormFile來接收上傳的檔案，FileName檔案名稱、Length檔案大小、ContentType檔案類型
         {
-            //_context.Members.Add(member);
-            //_context.SaveChanges();
+
 
             string filePath = Path.Combine(_host.WebRootPath, "Uploads", file.FileName);//用Path.Combine來結合完整路徑 IWebHostEnvironment的WebRootPath可以抓到根目錄路徑 IFormFile的FileName可以抓到檔案名稱
-            
+
+
+            //上傳檔案到uploads資料夾中
             using (var fileStream = new FileStream(filePath, FileMode.Create))//使用FileStream將圖片傳到實體路徑
             {
                 file.CopyTo(fileStream);
             }
-            return Content($"上傳檔案到 {filePath}");
 
-            //return Content("新增成功!!");
+            //將圖片轉為二進位
+            byte[]? imgByte = null;
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                imgByte = memoryStream.ToArray();
+            }
+
+            //return Content($"上傳檔案到 {filePath}");
+            member.FileName = file.FileName;
+            member.FileData= imgByte;
+            _context.Members.Add(member);
+            _context.SaveChanges();
+
+            return Content("新增成功!!");
         }
     }
 }
