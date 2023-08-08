@@ -23,6 +23,11 @@ namespace soraAjax.Controllers
             return View();
         }
 
+        public IActionResult GetDemo()
+        {
+            return View();
+        }
+
         public IActionResult Travel()
         {
             return View();

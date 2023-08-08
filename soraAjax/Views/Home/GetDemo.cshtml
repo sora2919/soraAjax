@@ -10,7 +10,7 @@
 @section Scripts{
     <script>
         const xhr=new XMLHttpRequest();//step1 建立ajax物件
-        xhr.open('GET','/api/index');//step2 對伺服器發出要求
+        xhr.open('GET','/api/GetDemo?name=sora');//step2 對伺服器發出要求
         xhr.send();
         xhr.addEventListener('load', () => {//step3 接收伺服器回傳的結果(要確定都讀完了>load事件)
             const data=xhr.responseText;//step4 讀出資料
