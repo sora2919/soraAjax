@@ -28,7 +28,9 @@
         </form>
         <div class="alert alert-info" id="div1"></div>
     </div>
-    <div class="col-3"></div>
+    <div class="col-3">
+        <a href="https://www.ispan.com.tw" id="a1">ispan</a>
+    </div>
 </div>
 
 @section Styles{
@@ -41,6 +43,9 @@
         const txtName = document.querySelector('#userName')
         const txtAge = document.querySelector('#userAge')
         const theDiv = document.querySelector('#div1')
+
+        const theA = document.querySelector('#a1')
+
         btn.addEventListener('click', event => {
             event.preventDefault(); //防止預設行為的發生 這邊是防止用預設的GET方式傳資料出去
             const xhr = new XMLHttpRequest();
@@ -51,7 +56,15 @@
                 const data = xhr.responseText;
                 theDiv.innerHTML = data;
             })
-
         })
+
+        //防止預設行為的發生preventDefault
+        theA.addEventListener('click', event => {
+            if (!window.confirm("真的要去嗎??")) {
+                event.preventDefault();
+            }
+        })
+
+
     </script>
 }
