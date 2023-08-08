@@ -5,7 +5,8 @@
 
 <h1>First</h1>
 
-<button id="btn" class="btn btn-primary">click</button>
+<button id="btnStart" class="btn btn-primary">click</button>
+<button id="btnEnd" class="btn btn-danger">cancel</button>
 <img src="\images\load.gif" id="load" />
 <div id="div1" class="alert alert-info"></div>
 
@@ -21,7 +22,8 @@
 
 @section Scripts{
     <script>
-        const btn = document.querySelector('#btn')
+        const btnStart = document.querySelector('#btnStart')
+        const btnEnd = document.querySelector('#btnEnd')
         const myDiv = document.querySelector('#div1')
         const imgLoad = document.querySelector('#load')
 
@@ -30,8 +32,8 @@
 
         //設定讀取開始時會執行甚麼
         xhr.addEventListener('loadstart', () => {
-            btn.setAttribute('disabled', 'disabled');
-            btn.textContent = "執行中...."
+            btnStart.setAttribute('disabled', 'disabled');
+            btnStart.textContent = "執行中...."
             imgLoad.style.display = "inline"
             myDiv.innerHTML += `<h3>Ajax開始</h3>`
 
@@ -39,20 +41,32 @@
 
         //設定讀取結束時會執行甚麼
         xhr.addEventListener('loadend',()=>{
-            btn.removeAttribute('disabled');
-            btn.textContent = "Click"
+            btnStart.removeAttribute('disabled');
+            btnStart.textContent = "Click"
             imgLoad.style.display = "none"
             myDiv.innerHTML += `<h3>Ajax結束</h3>`
 
         })
 
+        //設定逾時狀態
+        xhr.addEventListener('timeout', () => {
+            myDiv.innerHTML += `<h3>連線逾時，請稍後再試</h3>`
+
+        })
+
+        //設定強制結束ajax
+        btnEnd.addEventListener('click',()=>{
+            xhr.abort();
+        })
 
 
-        btn.addEventListener('click',()=>{
+
+        btnStart.addEventListener('click', () => {
             //myDiv.innerHTML="Button Click"
 
             //步驟2 對伺服器發出要求(Request)
             xhr.open('GET', '/api/index');//這個類似只有打網址，還沒按下enter
+            xhr.timeout = 3000;//timeout要設定在open及send之間，這是設定逾時停止
             xhr.send();//這步驟才等於有按下送出
 
             //步驟3 接收伺服器回傳的資料 下面的load事件是xhr.send()發出後，回傳的資料確定有下載完成才會出現的事件
