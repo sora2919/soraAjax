@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using soraAjax.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<DemoContext>(
+    options=>options.UseSqlServer(
+        builder.Configuration.GetConnectionString(""))
+    );
 
 var app = builder.Build();
 
@@ -22,6 +29,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Travel}/{id?}");
+    pattern: "{controller=Home}/{action=GetDemo}/{id?}");
 
 app.Run();
