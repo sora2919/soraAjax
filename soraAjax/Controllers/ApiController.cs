@@ -5,6 +5,14 @@ namespace soraAjax.Controllers
 {
     public class ApiController : Controller
     {
+        private readonly DemoContext _context;//注入方式建立連線
+
+        public ApiController(DemoContext context)
+        {
+            _context = context;
+        }
+
+
         public IActionResult Index()
         {
             System.Threading.Thread.Sleep(5000); //睡5秒鐘，再往下執行
@@ -19,6 +27,14 @@ namespace soraAjax.Controllers
                 user.name = "guest";
             }
             return Content($"Hello {user.name}! You're {user.age} years old.");
+        }
+
+        public IActionResult Register(Members member)//要存入的資料
+        {
+            _context.Members.Add(member);
+            _context.SaveChanges();
+
+            return Content("新增成功!!");
         }
     }
 }
