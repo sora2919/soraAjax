@@ -6,10 +6,13 @@ namespace soraAjax.Controllers
     public class ApiController : Controller
     {
         private readonly DemoContext _context;//注入方式建立連線
+        private readonly IWebHostEnvironment _host;//注入方式來抓伺服器相關環境資訊
 
-        public ApiController(DemoContext context)
+
+        public ApiController(DemoContext context, IWebHostEnvironment host)
         {
             _context = context;
+            _host = host;
         }
 
 
@@ -29,12 +32,20 @@ namespace soraAjax.Controllers
             return Content($"Hello {user.name}! You're {user.age} years old.");
         }
 
-        public IActionResult Register(Members member)//要存入的資料
+        public IActionResult Register(Members member,IFormFile file)//使用IFormFile來接收上傳的檔案，FileName檔案名稱、Length檔案大小、ContentType檔案類型
         {
-            _context.Members.Add(member);
-            _context.SaveChanges();
+            //_context.Members.Add(member);
+            //_context.SaveChanges();
 
-            return Content("新增成功!!");
+            string filePath = Path.Combine(_host.WebRootPath, "Uploads", file.FileName);//用Path.Combine來結合完整路徑 IWebHostEnvironment的WebRootPath可以抓到根目錄路徑 IFormFile的FileName可以抓到檔案名稱
+            
+            using (var fileStream = new FileStream(filePath, FileMode.Create))//使用FileStream將圖片傳到實體路徑
+            {
+                file.CopyTo(fileStream);
+            }
+            return Content($"上傳檔案到 {filePath}");
+
+            //return Content("新增成功!!");
         }
     }
 }

@@ -24,6 +24,10 @@
                 <label for="userAge" class="form-label">User Age：</label>
                 <input type="number" class="form-control" id="userAge" name="Age">
             </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Photo：</label>
+                <input class="form-control" type="file" id="formFile" name="file">@*這邊是要接收整個檔案資訊給IFormFile file*@
+            </div>
             <button id="btnSub" type="submit" class="btn btn-primary">送出</button>
             @*送出後可以F12在NETWORK中看到Request URL已經轉到/api/getdemo
             Request Method是POST
