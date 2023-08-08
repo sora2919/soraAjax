@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "GetDemo";
+}
+
+<h1>GetDemo</h1>
+
+<div id="div1" class="alert alert-info"></div>
+
+@section Scripts{
+    <script>
+        const xhr=new XMLHttpRequest();//step1 建立ajax物件
+        xhr.open('GET','/api/index');//step2 對伺服器發出要求
+        xhr.send();
+        xhr.addEventListener('load', () => {//step3 接收伺服器回傳的結果(要確定都讀完了>load事件)
+            const data=xhr.responseText;//step4 讀出資料
+            document.querySelector('#div1').innerHTML=`<h3>${data}</h3>`//step5 顯示資料在網頁上(想想要控制哪個標籤)
+
+        })
+
+    </script>
+}
