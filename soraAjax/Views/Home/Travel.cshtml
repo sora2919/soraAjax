@@ -5,26 +5,52 @@
 
 <h1>Travel</h1>
 
-<button id="btn" class="btn btn-primary">click</button>
-<div id="div1" class="alert alert-info"></div>
-
+<div class="container">
+    <div class="container row  justify-content-center" id="divCardDisplay">
+    </div>
+</div>
 
 @section Scripts{
     <script src="~/datas/travel.js"></script>
     <script>
-        const xhr = new XMLHttpRequest();
+        const card = document.querySelector('#divCardDisplay')
+        const datas = spots.CommonFormat.Section.map(viewspot=>{
+            const img = viewspot.file.img[0]
+            const imgUrl = (img == null) ? viewspot.file.img.text : img.text//因為只有一張的話就不會有陣列，要抓的字不一樣
 
-        btn.addEventListener('click', () => {
-        xhr.open("GET", "/datas/travel.js", true);
-        xhr.send();
-        xhr.addEventListener('load', () => {
-                const DATAS = xhr.responseText
-                div1.innerHTML = `<h3>${DATAS}</h3>`
-            console.log(DATAS)
-
-            })
+            const title = viewspot.stitle
+            const content = viewspot.xbody.substring(0,50)+'...'/*擷取部分字*/
+            let url = viewspot.xurl
+            if (url==null)//因不一定每個資料都有官網
+            {
+                return `
+                        <div class="card m-1 col-3">
+                         <img class="card-img-top" src="${imgUrl}" alt="Card image cap">
+                             <div class="card-body">
+                                <h5 class="card-title">${title}</h5>
+                                <p class="card-text">${content}</p>
+                             </div>
+                        </div>
+                    `
+            }
+            else{
+                return `
+                                <div class="card m-1 col-3">
+                                 <img class="card-img-top" src="${imgUrl}" alt="Card image cap">
+                                     <div class="card-body">
+                                        <h5 class="card-title">${title}</h5>
+                                        <p class="card-text">${content}</p>
+                                        <a href="${url}" class="btn btn-primary">網址</a>
+                                     </div>
+                                </div>
+                            `
+            }
 
         })
+
+        card.innerHTML= datas.join("")
+
+
     </script>
 }
 
