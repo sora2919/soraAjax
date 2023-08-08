@@ -10,7 +10,8 @@
     <div class="col-6">
         @*<form action="~/api/getdemo" method="post" enctype="application/x-www-form-urlencoded">method不寫的話預設是GET*@
 
-            <form>@*接下來要用設定XMLHttpRequest屬性的方式來設定POST*@
+            <form id="form1">@*使用FormData傳送表單*@
+                @*接下來要用設定XMLHttpRequest屬性的方式來設定POST*@
             <div class="mb-3">
                 <label for="userName" class="form-label">User Name：</label> @*for與下面的input id相同，可以點上面的label文字就將游標移到input裡*@
                 <input type="text" class="form-control" id="userName" name="name">
@@ -50,8 +51,14 @@
             event.preventDefault(); //防止預設行為的發生 這邊是防止用預設的GET方式傳資料出去
             const xhr = new XMLHttpRequest();
             xhr.open('POST', '/api/getdemo');//step1 open中第一參數改為POST，第二參數則放要執行的action
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')//step2 在open send間設定setRequestHeader的屬性(上面現在預設是GET)
-            xhr.send(`name=${txtName.value}&age=${txtAge.value}`);//step3 要傳送到伺服器端的資料放到send裡面
+            //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')//step2 在open send間設定setRequestHeader的屬性(上面現在預設是GET)
+            //xhr.send(`name=${txtName.value}&age=${txtAge.value}`);//step3 要傳送到伺服器端的資料放到send裡面
+
+            //改用FormData
+            const formData = new FormData(document.querySelector('#form1'))//直接找form物件塞進去
+            xhr.send(formData);//再把這個物件直接送出
+
+
             xhr.addEventListener('load', () => {
                 const data = xhr.responseText;
                 theDiv.innerHTML = data;
