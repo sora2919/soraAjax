@@ -59,6 +59,10 @@
             xhr.abort();
         })
 
+        //abort 事件是abort()方法被執行時會觸發
+        xhr.addEventListener('abort', () => {
+            myDiv.innerHTML += `<h3>您停止了程式的執行</h3>`
+        })
 
 
         btnStart.addEventListener('click', () => {
