@@ -6,9 +6,10 @@
 <h1>homework4</h1>
 <div class="form-group">
     <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="citySelect">
+    <select class="form-control my-5" id="CitySelect">
     </select>
     <span class="alert alert-info" id="display"></span>
+    
 </div>
 
 
@@ -20,17 +21,23 @@
         const displaySpan = document.querySelector('#display')
 
 //載入時讀取城市資料
-function loadCity(){
-            const datas = cities.map()
-}
+        function loadCity(){
+            const datas = cities.map(city => `<option value='${city}'>${city}</option>`)
+            citySelect.innerHTML = datas.join("");
+        }
 
 
 //點選城市後將資料載入SPAN
 
+        citySelect.addEventListener('change', () => {
+            displaySpan.textContent = `${citySelect.value}`
+        })
 
-            < option > 1 < /option>
+        function show() {
+            theDiv.textContent = `${citySelect.value}`;
+        }
 
-
+     loadCity();
 
     </script>
 }
