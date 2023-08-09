@@ -6,7 +6,7 @@
 <h1>Register</h1>
 
 <div class="row">
-    <div class="col-3"></div>
+    <div class="col-1"></div>
     <div class="col-6">
         @*<form action="~/api/getdemo" method="post" enctype="application/x-www-form-urlencoded">method不寫的話預設是GET*@
 
@@ -39,6 +39,9 @@
     </div>
     <div class="col-3">
         <a href="https://www.ispan.com.tw" id="a1">ispan</a>
+        <div>
+            <p>預覽圖片</p><img src="" id="previewPic" class="img-thumbnail"></img>
+        </div>
     </div>
 </div>
 
@@ -117,6 +120,25 @@
                 }
             })
         })
+
+        const preview = document.querySelector('#previewPic');
+        const uploadPic = document.querySelector('#formFile');
+        //加入圖片預覽功能 參考http://disq.us/t/4bah53h
+
+            var fileReader = new FileReader();//用fileReader來做圖片網址，先做個fileReader物件
+
+        uploadPic.addEventListener('change', function (event) {//當有上傳圖片的時候判定是否有成功上傳圖片
+            if (this.files.length>0){//如果有上傳檔案大小會產生變化
+                fileReader.readAsDataURL(this.files[0]);//readAsDataURL()	是一個帶有表示文件數據的 URL 的 result字符串。data:
+            }
+
+            fileReader.addEventListener("load", function (event) {//為了確保圖片上傳完成並且自動生產URL，所以用load事件來將
+                preview.src = this.result;//這邊的this是fileReader
+            });
+
+        })
+
+
 
     </script>
 }
