@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewData["Title"] = "Promise";
+}
+
+<h1>Promise</h1>
+
+@section Scripts{
+    <script>
+        //等一秒，印出A>B>C
+        //setTimeout(function () {
+        //    console.log('A');
+        //}, 1000);
+        //setTimeout(function () {
+        //    console.log('B');
+        //}, 1000);
+        //setTimeout(function () {
+        //    console.log('C');
+        //}, 1000);
+
+
+        //等1秒印出C，再等1秒印出B，再等1秒印出A(全部印出要3秒鐘)
+        //setTimeout(function () {
+        //    console.log('A');
+        //}, 3000);
+        //setTimeout(function () {
+        //    console.log('B');
+        //}, 2000);
+        //setTimeout(function () {
+        //    console.log('C');
+        //}, 1000);
+
+
+         //等1秒印出A，再等1秒印出B，再等1秒印出C(全部印出要3秒鐘)
+        //setTimeout(function () {
+        //    console.log('A');
+        //    setTimeout(function () {
+        //        console.log('B');
+        //        setTimeout(function () {
+        //            console.log('C');
+        //        }, 1000);
+        //    }, 1000);
+        //}, 1000);
+
+
+        //建立Promise物件
+        //const promise = new Promise((resolve,reject)=>{
+        //     const num = Math.random() > 0.5 ? 1 : 0;
+        //     console.log(num)
+        //     if(num){
+        //         resolve("成功")
+        //     }else{
+        //         reject("錯誤")
+        //     }
+        //})
+        //使用
+        //promise
+        //    .then(data=>{
+        //        console.log(data)
+        //    })
+        //    .catch(error=>{
+        //        console.log(error)
+        //    })
+        //    .finally(()=>{
+        //        console.log("end")
+        //    })
+
+
+
+
+        //印數字問題 用promise來讓數字依序印出
+        function printSomething(data){
+             return new Promise((resolve, reject)=>{ //這邊用return等於宣告一個promise物件
+                 setTimeout(()=>{
+                    resolve(data + 1)//如果OK的話resolve回傳甚麼值出來，這邊只是單純就
+                 },1000)
+             })
+        }
+       // console.log(printSomething("A"));  //這裡會得到 Promise物件，要取出Promise物件的資料要透過then()
+        printSomething("A")
+            .then(d => {//.then是如果結果是resolve的話就回傳resolve結果，所以這邊會跑resolve(A + 1)
+               console.log(d)//所以一秒後印出來A1
+                return printSomething("B")//執行完叫他回傳一個printSomething("B")的結果，所以他又會跑去printSomething裡面又跑一次promise
+           })
+            .then(d => {//這邊又進到resolve(B + 1)
+                console.log(d)//所以一秒後印B1出來
+                return printSomething("C")//再叫他回傳一個printSomething("C")
+           })
+            .then(d => {//這邊又進到resolve(C + 1)
+                console.log(d)//所以一秒後印C1出來
+           })
+
+    </script>
+    }
