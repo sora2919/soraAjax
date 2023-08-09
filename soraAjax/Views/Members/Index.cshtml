@@ -43,10 +43,14 @@
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FileName)
+                @*直接上傳檔案到伺服器，並且讀取路徑法*@
+                <img src="~/uploads/@item.FileName" class="img-thumbnail w-50" />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FileData)
+                @*轉換二進位法*@
+                <img src="~/api/GetImageByte/@item.MemberId" class="img-thumbnail w-25" />@*第一種等於直接插入網址*@
+
+                <img src="@Url.Action("GetImageByte","api",new{id=item.MemberId})" class="img-thumbnail w-25" />@*第二種是城市自動生成的網址*@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.MemberId">Edit</a> |

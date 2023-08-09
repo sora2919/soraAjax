@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using soraAjax.Models;
 using System.Diagnostics;
 
@@ -43,5 +44,11 @@ namespace soraAjax.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Homework4()//HW4
+        {
+            return View();
+        }
+
     }
 }
