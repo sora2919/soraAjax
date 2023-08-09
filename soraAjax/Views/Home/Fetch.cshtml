@@ -4,20 +4,39 @@
 }
 
 <h1>Fetch</h1>
+<h2 id="myH"></h2>
+<img id="img1" class="w-25" />
 
+<ul id="ul1">
+</ul>
 @section Scripts{
     <script>
         //直接印出fetch，可以看到他回傳的是一個promise
         console.log(fetch('@Url.Content("/api/Fetch")'));
 
         //所以他也可以用then去抓結果，如果成功的話會回傳Response，失敗的話是catch error
+
+        //伺服器回傳的資料包在body中，要看回傳的是甚麼資料再去用不同的方法讀回來，我們這邊傳回的是純文字，用text()
         fetch('@Url.Content("/api/Fetch")')
-            .then(response => {
-                //可以叫出很多相關資訊
-                console.log(response)
-                console.log(response.ok)
-                console.log(response.status)
-                console.log(response.body)
+            .then(response => response.text())
+            .then(data=>{
+                document.querySelector('#myH').innerHTML = data;
+            })
+
+        //如果要叫json的資料
+        fetch('@Url.Content("/api/Cities")')
+            .then(response => response.json())//這個方法因為他知道取回的是json也自動幫忙轉譯了，所以我們不用再幫他轉型
+            .then(datas => {
+                const lis = datas.map(city => `<li>${city}</li>`)
+                document.querySelector('#ul1').innerHTML = lis.join("")
+            })
+        
+        //叫二進位資料
+        fetch('@Url.Content("/api/GetImageByte/7")')
+            .then(response => response.blob())
+            .then(datas => {
+                const myImg = document.querySelector('#img1');
+                myImg.src = URL.createObjectURL(datas);//URL.createObjectURL要丟入的參數是一個blob物件，就剛好是上面找到的datas
             })
     </script>
 }
