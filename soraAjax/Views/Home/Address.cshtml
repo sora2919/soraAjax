@@ -8,6 +8,7 @@
 <select id="selectDistrict"></select>
 <select id="selectRoad"></select>
 
+<div id="div1" class="alert alert-info"> </div>@*看有沒有抓到city的value*@
 
 @section Scripts{
 
@@ -15,6 +16,8 @@
         const selCity = document.querySelector('#selectCity');
         const selDist = document.querySelector('#selectDistrict');
         const selRoad = document.querySelector('#selectRoad');
+
+        const theDiv = document.querySelector('#div1');
 
         function loadCity() {
             const xhr = new XMLHttpRequest();
@@ -28,7 +31,10 @@
         }
         loadCity()
 
-
+        selCity.addEventListener('change', () => {
+            //  theDiv.textContent = `${selCity.options[selCity.selectedIndex].text}-${selCity.options[selCity.selectedIndex].value} `
+            theDiv.textContent = selCity.value;
+        })
     </script>
 }
 
