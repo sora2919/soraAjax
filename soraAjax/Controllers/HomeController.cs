@@ -62,5 +62,10 @@ namespace soraAjax.Controllers
 
         }
 
+        public IActionResult Fetch()
+        {
+            return View();
+        }
+
     }
 }
