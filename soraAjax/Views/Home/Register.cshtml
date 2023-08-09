@@ -59,27 +59,38 @@
 
         btn.addEventListener('click', event => {
             event.preventDefault(); //防止預設行為的發生 這邊是防止用預設的GET方式傳資料出去
-            const xhr = new XMLHttpRequest();
-            //關於路徑 前面加~只有RAZOR看得懂 ~/代表這個網站專案的根目錄(因為一個伺服器上可能會有很多不同網站，伺服器根目錄!=網站根目錄)
-            // xhr.open('GET', '/api/index');  //開發時不會錯，佈署到伺服器上就會有可能出錯
-            // xhr.open('GET', '~/api/index'); //一定不可以(因為JS看不懂)
-            
-            //建議要用下面的兩種寫法來產生路徑
-            //   xhr.open('GET','@Url.Action("index","api")') 但是要記哪個位置要代哪個參數很不方便
-            xhr.open('POST', '@Url.Content("/api/Register")')//這個方法比較直覺，直接把路徑丟進去讓他自動生成就好
-            //step1 open中第一參數改為POST，第二參數則放要執行的action
-            //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')//step2 在open send間設定setRequestHeader的屬性(上面現在預設是GET)
-            //xhr.send(`name=${txtName.value}&age=${txtAge.value}`);//step3 要傳送到伺服器端的資料放到send裡面
+            //const xhr = new XMLHttpRequest();
+            ////關於路徑 前面加~只有RAZOR看得懂 ~/代表這個網站專案的根目錄(因為一個伺服器上可能會有很多不同網站，伺服器根目錄!=網站根目錄)
+            //// xhr.open('GET', '/api/index');  //開發時不會錯，佈署到伺服器上就會有可能出錯
+            //// xhr.open('GET', '~/api/index'); //一定不可以(因為JS看不懂)
+            ////建議要用下面的兩種寫法來產生路徑
+            ////   xhr.open('GET','@Url.Action("index","api")') 但是要記哪個位置要代哪個參數很不方便
+            //xhr.open('POST', '@Url.Content("/api/Register")')//這個方法比較直覺，直接把路徑丟進去讓他自動生成就好
+            ////step1 open中第一參數改為POST，第二參數則放要執行的action
+            ////xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')//step2 在open send間設定setRequestHeader的屬性(上面現在預設是GET)
+            ////xhr.send(`name=${txtName.value}&age=${txtAge.value}`);//step3 要傳送到伺服器端的資料放到send裡面
+            ////改用FormData
+            //const formData = new FormData(document.querySelector('#form1'))//直接找form物件塞進去
+            //xhr.send(formData);//再把這個物件直接送出
+            //xhr.addEventListener('load', () => {
+            //    const data = xhr.responseText;
+            //    theDiv.innerHTML = data;
+            //})
 
-            //改用FormData
-            const formData = new FormData(document.querySelector('#form1'))//直接找form物件塞進去
-            xhr.send(formData);//再把這個物件直接送出
-
-
-            xhr.addEventListener('load', () => {
-                const data = xhr.responseText;
-                theDiv.innerHTML = data;
+            //改用 fetch 傳送FormData到server端
+            const formData = new FormData(document.querySelector('#form1'));
+            fetch('@Url.Content("/api/register")', {//body傳要傳出的資料，formData要用POST方式傳出
+                body:formData,
+                method:'POST',
+            }).then(Response=>{//再看傳出資料後回應的結果
+                if (Response.ok) {
+                    alert("新增成功")
+                    location.href = '@Url.Content("/Members/index")'//重新將網址轉移到
+                } else {
+                    alert("有錯誤!!")
+                }
             })
+
         })
 
         //防止預設行為的發生preventDefault
