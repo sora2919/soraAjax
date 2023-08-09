@@ -10,7 +10,11 @@
 @section Scripts{
     <script>
         const xhr=new XMLHttpRequest();//step1 建立ajax物件
-        xhr.open('GET','/api/GetDemo?name=sora');//step2 對伺服器發出要求
+        //xhr.open('GET','/api/GetDemo?name=sora&age=36');//step2 對伺服器發出要求
+        //這個自動生成網址時要注意不要把後面的?也加進去，因為&會被轉成編碼
+        //只要放要轉的目錄部分就好
+        xhr.open('GET', '@Url.Content("/api/GetDemo")?name=sora&age=36')
+
         xhr.send();
         xhr.addEventListener('load', () => {//step3 接收伺服器回傳的結果(要確定都讀完了>load事件)
             const data=xhr.responseText;//step4 讀出資料
