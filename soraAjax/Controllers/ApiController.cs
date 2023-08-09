@@ -77,5 +77,28 @@ namespace soraAjax.Controllers
             return File(img, "image/jpeg");//這邊可以自動轉換類型，第二個參數的意思是要轉成圖片/檔案格式
         }
 
+        //讀取資料庫中的縣市資料
+        public IActionResult Cities()
+        {
+            var cities=_context.Address.Select(c=>c.City).Distinct();
+            //var cities = _context.Address.Select(c => new {c.City}).Distinct(); 這個會連同欄位名稱一起回傳 但現在只要讀取簡單的城市名稱就好所以用上面的
+            return Json(cities);
+        }
+
+        //由縣市去抓取對應的鄉鎮區資料
+        public IActionResult Districts(string city)
+        {
+            var districts = _context.Address.Where(d => d.City== city).Select(c=>c.SiteId).Distinct();
+            return Json(districts);
+        }
+
+        //由鄉鎮區去抓路名資料
+
+        public IActionResult Roads(string siteId)
+        {
+            var roads = _context.Address.Where(a => a.SiteId == siteId).Select(c => c.Road).Distinct();
+            return Json(roads);
+        }
+
     }
 }

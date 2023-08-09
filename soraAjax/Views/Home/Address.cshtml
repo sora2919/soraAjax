@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>Address</h1>
+<select id="selectCity"></select>
+<select id="selectDistrict"></select>
+<select id="selectRoad"></select>
+
+
+@section Scripts{
+
+    <script>
+        const selCity = document.querySelector('#selectCity');
+        const selDist = document.querySelector('#selectDistrict');
+        const selRoad = document.querySelector('#selectRoad');
+
+        function loadCity() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '@Url.Content("/api/Cities")');
+            xhr.send();
+            xhr.addEventListener('load', () => {
+                const datas = JSON.parse(xhr.responseText);/*現在這邊回來的資料是Json格式，我們看不懂，所以要轉譯*/
+                const cities = datas.map(city => `<option value='${city}'>${city}</option>`)/*因為這邊回來的東西很簡單可以省略很多，連return都可省*/
+                selCity.innerHTML = cities.join("");
+            })
+        }
+        loadCity()
+
+
+    </script>
+}
+
+@section Styles{
+
+}
