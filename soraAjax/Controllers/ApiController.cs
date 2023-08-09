@@ -88,7 +88,7 @@ namespace soraAjax.Controllers
         //由縣市去抓取對應的鄉鎮區資料
         public IActionResult Districts(string city)
         {
-            var districts = _context.Address.Where(d => d.City== city).Select(c=>c.SiteId).Distinct();
+            var districts = _context.Address.Where(d => d.City==city).Select(c=>c.SiteId).Distinct();
             return Json(districts);
         }
 
