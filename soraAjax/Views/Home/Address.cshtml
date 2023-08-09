@@ -40,8 +40,7 @@
                 const datas = JSON.parse(xhr.responseText);
                 const districts = datas.map(district => `<option value='${district}'>${district}</option>`)
                 selDist.innerHTML = districts.join("");
-                loadRoad()
-
+                loadRoad();
             })
 
         }
@@ -54,6 +53,7 @@
                 const datas = JSON.parse(xhr.responseText);
                 const roads = datas.map(road => `<option value='${road}'>${road}</option>`)
                 selRoad.innerHTML = roads.join("");
+                show()//因為會連動，所以直接在這邊show就可以印出目前select裡面的字
             })
         }
 
@@ -62,17 +62,23 @@
 
         selCity.addEventListener('change', () => {
             //  theDiv.textContent = `${selCity.options[selCity.selectedIndex].text}-${selCity.options[selCity.selectedIndex].value} `//正統要這樣抓資料比較嚴謹(?)，但下面是方便的方式
-            theDiv.textContent = selCity.value;
+            //theDiv.textContent = selCity.value;
             loadDistrict();
         })
 
         selDist.addEventListener('change', () => {
-            theDiv.textContent = selDist.value;
+            //theDiv.textContent = selDist.value;
             loadRoad();
         })
-        selRoad.addEventListener('change', () => {
-            theDiv.textContent += selRoad.value;
-        })
+        //selRoad.addEventListener('change', () => {
+        //    theDiv.textContent += selRoad.value;
+        //})
+
+        //解決show()的問題
+        function show() {
+            theDiv.textContent = `${selDist.value} ${selRoad.value}`;
+        }
+
     </script>
 }
 
