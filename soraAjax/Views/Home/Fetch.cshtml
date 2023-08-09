@@ -5,3 +5,19 @@
 
 <h1>Fetch</h1>
 
+@section Scripts{
+    <script>
+        //直接印出fetch，可以看到他回傳的是一個promise
+        console.log(fetch('@Url.Content("/api/Fetch")'));
+
+        //所以他也可以用then去抓結果，如果成功的話會回傳Response，失敗的話是catch error
+        fetch('@Url.Content("/api/Fetch")')
+            .then(response => {
+                //可以叫出很多相關資訊
+                console.log(response)
+                console.log(response.ok)
+                console.log(response.status)
+                console.log(response.body)
+            })
+    </script>
+}
