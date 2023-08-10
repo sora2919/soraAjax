@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Homework6";
+}
+
+<h1>Homework7</h1>
+
+<div class="form-group py-2 list-group col-5">
+    <label for="txtProductName">品名:</label>
+    <input type="text" class="form-control" id="txtProductName" />
+    <div class="auto-complete" id="displayAutoComplete">
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        const txtInput = document.querySelector('#txtProductName');
+        const display = document.querySelector('#displayAutoComplete');
+
+        async function loadProducts() {
+            const response = await fetch('https://northwind.vercel.app/api/Products');//首先抓資料讀出來
+            const data = await response.json();
+
+            const productNames = data.map(product => product.name); //用map把品名篩選出來
+            
+            txtInput.addEventListener('input', function () {
+                const inputValue = txtInput.value.toLowerCase();
+                const filteredProducts = productNames.filter(productName =>
+                    productName.toLowerCase().includes(inputValue)).slice(0, 5)//先篩選關鍵字，但可能搜出來的結果會太多看起來很長，這邊選5個就好
+                //console.log(filteredProducts)
+                display.innerHTML = '';//清空前面可能有的查詢
+                filteredProducts.map(productName => {//把剛剛篩選出來的關鍵字陣列列出來並幫他們加上樣式
+                    const suggestion = document.createElement('div');//建立HTML元素var element = document.createElement(tagName[, options]);
+                    suggestion.textContent = productName;//裡面要放的字<div>就是這邊</div>
+                    suggestion.classList.add('list-group-item');//classList.add加class樣式
+                    suggestion.classList.add('list-group-item-action');
+                    suggestion.addEventListener('click', () => {//這邊再加入click事件，確定是誰被點選到
+                        txtInput.value = productName;//把選到的productName加到txtInput裡
+                        display.innerHTML = '';//因為已經選到了所以把查詢清空
+                    });
+                    display.appendChild(suggestion);//前面如果都沒選的話這邊會將產出來的html標籤加到displayAutoComplete的div中
+                });
+            });
+        }
+
+        txtInput.addEventListener('blur',()=>{//移出input取消autocomplete選單
+            display.innerHTML = '';
+        })
+
+        loadProducts();
+       
+    </script>
+}
+
+@section Styles{
+
+}

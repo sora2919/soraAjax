@@ -67,5 +67,10 @@ namespace soraAjax.Controllers
             return View();
         }
 
+        public IActionResult Homework7()//HW7
+        {
+            return View();
+        }
+
     }
 }
