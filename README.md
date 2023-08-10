@@ -10,3 +10,5 @@
 [作業五](https://github.com/sora2919/soraAjax/tree/e703422448822859aaeca2b98e8198a19ea1996a)
 
 [作業六](https://github.com/sora2919/soraAjax/tree/bc3bed33b2c7e5b0763d730c210d1ace02671941)
+
+[作業七](https://github.com/sora2919/soraAjax/tree/bf2c0d52979ec4a7f3bc90574bb862ce6a95b374)
