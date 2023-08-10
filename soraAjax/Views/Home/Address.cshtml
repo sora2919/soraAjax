@@ -19,44 +19,67 @@
 
         const theDiv = document.querySelector('#div1');
 
-        function loadCity() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', '@Url.Content("/api/Cities")');
-            xhr.send();
-            xhr.addEventListener('load', () => {
-                const datas = JSON.parse(xhr.responseText);/*現在這邊回來的資料是Json格式，我們看不懂，所以要轉譯*/
-                const cities = datas.map(city => `<option value='${city}'>${city}</option>`)/*因為這邊回來的東西很簡單可以省略很多，連return都可省*/
-                selCity.innerHTML = cities.join("");
+        //改寫async await fetch loadCity()
+        //function loadCity() {
+        //    const xhr = new XMLHttpRequest();
+        //    xhr.open('GET', '@Url.Content("/api/Cities")');
+        //    xhr.send();
+        //    xhr.addEventListener('load', () => {
+        //        const datas = JSON.parse(xhr.responseText);/*現在這邊回來的資料是Json格式，我們看不懂，所以要轉譯*/
+        //        const cities = datas.map(city => `<option value='${city}'>${city}</option>`)/*因為這邊回來的東西很簡單可以省略很多，連return都可省*/
+        //        selCity.innerHTML = cities.join("");
 
-                loadDistrict()//為了要確保city資料讀完(才可以選擇到讀出來的資料，讓他自動生成鄉鎮區的select)，所以要放在city的load事件裡面確保已經讀完了才執行這個動作
-            })
+        //        loadDistrict()//為了要確保city資料讀完(才可以選擇到讀出來的資料，讓他自動生成鄉鎮區的select)，所以要放在city的load事件裡面確保已經讀完了才執行這個動作
+        //    })
+        //}
+
+        async function loadCity(){
+            const response = await fetch('@Url.Content("/api/Cities")')
+            const datas = await response.json()
+            const cities = datas.map(city => `<option value='${city}'>${city}</option>`)
+            selCity.innerHTML = cities.join("");
+            loadDistrict()
         }
 
-        function loadDistrict() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', `@Url.Content("/api/Districts")?city=${selCity.value}`);
-            xhr.send();
-            xhr.addEventListener('load', () => {
-                const datas = JSON.parse(xhr.responseText);
-                const districts = datas.map(district => `<option value='${district}'>${district}</option>`)
-                selDist.innerHTML = districts.join("");
-                loadRoad();
-            })
-
+        //改寫async await fetch loadDistrict()
+        //function loadDistrict() {
+        //    const xhr = new XMLHttpRequest();
+        //    xhr.open('GET', `@Url.Content("/api/Districts")?city=${selCity.value}`);
+        //    xhr.send();
+        //    xhr.addEventListener('load', () => {
+        //        const datas = JSON.parse(xhr.responseText);
+        //        const districts = datas.map(district => `<option value='${district}'>${district}</option>`)
+        //        selDist.innerHTML = districts.join("");
+        //        loadRoad();
+        //    })
+        //}
+        async function loadDistrict() {
+            const response = await fetch(`@Url.Content("/api/Districts")?city=${selCity.value}`)
+            const datas=await response.json()
+            const districts = datas.map(district => `<option value='${district}'>${district}</option>`)
+            selDist.innerHTML = districts.join("");
+            loadRoad();
         }
 
-        function loadRoad() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', `@Url.Content("/api/roads")?siteId=${selDist.value}`);
-            xhr.send();
-            xhr.addEventListener('load', () => {
-                const datas = JSON.parse(xhr.responseText);
-                const roads = datas.map(road => `<option value='${road}'>${road}</option>`)
-                selRoad.innerHTML = roads.join("");
-                show()//因為會連動，所以直接在這邊show就可以印出目前select裡面的字
-            })
+        //改寫async await fetch loadRoad()
+        //function loadRoad() {
+        //    const xhr = new XMLHttpRequest();
+        //    xhr.open('GET', `@Url.Content("/api/roads")?siteId=${selDist.value}`);
+        //    xhr.send();
+        //    xhr.addEventListener('load', () => {
+        //        const datas = JSON.parse(xhr.responseText);
+        //        const roads = datas.map(road => `<option value='${road}'>${road}</option>`)
+        //        selRoad.innerHTML = roads.join("");
+        //        show()//因為會連動，所以直接在這邊show就可以印出目前select裡面的字
+        //    })
+        //}
+        async function loadRoad(){
+            const response = await fetch(`@Url.Content("/api/roads")?siteId=${selDist.value}`)
+            const datas=await response.json()
+            const roads = datas.map(road => `<option value='${road}'>${road}</option>`)
+            selRoad.innerHTML = roads.join("");
+            show()
         }
-
 
         loadCity()
 
@@ -70,9 +93,9 @@
             //theDiv.textContent = selDist.value;
             loadRoad();
         })
-        //selRoad.addEventListener('change', () => {
-        //    theDiv.textContent += selRoad.value;
-        //})
+        selRoad.addEventListener('change', () => {
+            show()
+        })
 
         //解決show()的問題
         function show() {
