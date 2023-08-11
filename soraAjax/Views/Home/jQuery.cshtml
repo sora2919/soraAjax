@@ -52,8 +52,18 @@
             //$('#divAlert').load('@Url.Content("~/home/partial1")')
             $('#divAlert').load('@Url.Content("~/home/partial2")')
         })
+
+        //AJAX
         $('#buttonAjax').click(function () {
-            $('#divAlert').text("AJAX")
+            $.ajax({
+                'url': '@Url.Content("~/api/getdemo")',
+                'type':'get',   //可使用GET或POST
+                'data': {"name":"TOM","age":28},
+                'success': function (data) {    //success回應成功後會呼叫函式，但現在都用.done比較多，下一個再用done來做
+                    $('#divAlert').text(data)
+                }
+            })
+
         })
         $('#buttonCors').click(function () {
             $('#divAlert').text("CORs")
