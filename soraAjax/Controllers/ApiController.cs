@@ -78,7 +78,7 @@ namespace soraAjax.Controllers
         public IActionResult GetImageByte(int id=1) 
         {
             Members? member = _context.Members.Find(id);//Find可以找PK
-            byte[]? img = member.FileData;
+            byte[]? img = member?.FileData;
             return File(img, "image/jpeg");//這邊可以自動轉換類型，第二個參數的意思是要轉成圖片/檔案格式
         }
 

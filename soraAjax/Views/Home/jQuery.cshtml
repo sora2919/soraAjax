@@ -56,12 +56,21 @@
         //AJAX
         $('#buttonAjax').click(function () {
             $.ajax({
-                'url': '@Url.Content("~/api/getdemo")',
+                'url': '@Url.Content("~/api/Cities")',
                 'type':'get',   //可使用GET或POST
-                'data': {"name":"TOM","age":28},
-                'success': function (data) {    //success回應成功後會呼叫函式，但現在都用.done比較多，下一個再用done來做
-                    $('#divAlert').text(data)
-                }
+                'datatype':'json',
+                //'data': {"name":"TOM","age":28},
+                //'success': function (data) {    //success回應成功後會呼叫函式，但現在都用.done比較多，下一個再用done來做
+                //    $('#divAlert').text(data)
+                })//改用done並直接顯示在網頁上
+            .done(function (data){
+                    const theUl = $('#divAlert>ul');
+                    const docFrag = $(document.createDocumentFragment()) //建立一個空元素(容器)
+                    $.each(data, function (idx, city) {
+                        const item = $('<li></li>').text(city)
+                        docFrag.append(item)
+                    })
+                    theUl.html(docFrag)
             })
 
         })
