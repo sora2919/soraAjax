@@ -72,5 +72,13 @@ namespace soraAjax.Controllers
             return View();
         }
 
+        public IActionResult jQuery()
+        {
+            return View();
+        }
+        public IActionResult History()
+        {
+            return View();
+        }
     }
 }

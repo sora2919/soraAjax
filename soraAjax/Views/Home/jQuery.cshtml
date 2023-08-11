@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "jQuery";
+}
+
+<h1>jQuery</h1>
+<button id="buttonGet" class="btn btn-primary">get</button>
+<button id="buttonPost" class="btn btn-secondary">post</button>
+<button id="buttonJson" class="btn btn-success">getJson</button>
+<button id="buttonLoad" class="btn btn-info">load</button>
+<button id="buttonAjax" class="btn btn-warning">ajax</button>
+<button id="buttonCors" class="btn btn-danger">cors</button>
+<div class="alert alert-dark mt-3 w-50" role="alert" id="divAlert">
+
+</div>
+@section Scripts{
+    <script>
+        //GET
+        $('#buttonGet').click(function(){ 
+            //第一個參數:api網址 第二個參數:要代到網址的參數 第三個參數:接收資料的
+            $.get('@Url.Content("~/api/getdemo")',{"name":"TOM","age":28},function(data){
+            //data就會收到伺服器回傳的結果
+            $('#divAlert').text(data)
+            })
+        })
+        
+        $('#buttonPost').click(function () {
+            $.post('@Url.Content("~/api/getdemo")', { "name": "Jacky", "age": 27 }, function (data){
+                $('#divAlert').text(data)
+        })
+        })
+
+        //回傳的是陣列，這邊都用jquery方式來做，用each印出來
+        $('#buttonJson').click(function () {
+            $.getJSON('@Url.Content("~/api/Cities")', function (datas) {
+                $.each(datas,function(idx,city){
+                console.log(city)
+                })
+            })
+        })
+        $('#buttonLoad').click(function () {
+            $('#divAlert').text("LOAD")
+        })
+        $('#buttonAjax').click(function () {
+            $('#divAlert').text("AJAX")
+        })
+        $('#buttonCors').click(function () {
+            $('#divAlert').text("CORs")
+        })
+
+    </script>
+}
