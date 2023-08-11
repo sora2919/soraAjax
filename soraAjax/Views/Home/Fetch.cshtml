@@ -12,7 +12,7 @@
 @section Scripts{
     <script>
         //直接印出fetch，可以看到他回傳的是一個promise
-        console.log(fetch('@Url.Content("/api/Fetch")'));
+        console.log(fetch('@Url.Content("~/api/Fetch")'));
 
         //所以他也可以用then去抓結果，如果成功的話會回傳Response，失敗的話是catch error
 
@@ -22,27 +22,27 @@
        //把fetch加上async await(將fetch包到async function中，要then的地方await)
 
         //加上async await練習
-        //fetch('@Url.Content("/api/Fetch")')
+        //fetch('@Url.Content("~/api/Fetch")')
         //    .then(response => response.text())
         //    .then(data => {
         //        document.querySelector('#myH').innerHTML = data;
         //    })
         async function loadFetch() {
-            const response =await fetch('@Url.Content("/api/Fetch")')
+            const response =await fetch('@Url.Content("~/api/Fetch")')
             const data = await response.text()
             document.querySelector('#myH').innerHTML = data;
         }
 
 
         ////叫json的資料 加上async await，下面對照
-        //fetch('@Url.Content("/api/Cities")')
+        //fetch('@Url.Content("~/api/Cities")')
         //    .then(response => response.json())//這個方法因為他知道取回的是json也自動幫忙轉譯了，所以我們不用再幫他轉型
         //    .then(datas => {
         //        const lis = datas.map(city => `<li>${city}</li>`)
         //        document.querySelector('#ul1').innerHTML = lis.join("")
         //    })
         async function loadJson(){
-            const response = await fetch('@Url.Content("/api/Cities")')//把這個fetch產生的promise物件丟到前面的變數
+            const response = await fetch('@Url.Content("~/api/Cities")')//把這個fetch產生的promise物件丟到前面的變數
             const datas = await response.json()//再從剛剛的變數中抓到回傳的body裡的json資料
             //剩下就直接把資料丟上去就好
             const lis = datas.map(city => `<li>${city}</li>`)
@@ -50,14 +50,14 @@
         }
 
         //再練習一個加上async await 叫二進位資料
-        //fetch('@Url.Content("/api/GetImageByte/7")')
+        //fetch('@Url.Content("~/api/GetImageByte/7")')
         //    .then(response => response.blob())
         //    .then(datas => {
         //        const myImg = document.querySelector('#img1');
         //        myImg.src = URL.createObjectURL(datas);//URL.createObjectURL要丟入的參數是一個blob物件，就剛好是上面找到的datas
         //    })
         async function loadPic(){
-            const response= await fetch('@Url.Content("/api/GetImageByte/7")')
+            const response= await fetch('@Url.Content("~/api/GetImageByte/7")')
             const datas = await response.blob()
             const myImg = document.querySelector('#img1');
             myImg.src = URL.createObjectURL(datas);

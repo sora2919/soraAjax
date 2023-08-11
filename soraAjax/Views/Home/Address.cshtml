@@ -22,7 +22,7 @@
         //改寫async await fetch loadCity()
         //function loadCity() {
         //    const xhr = new XMLHttpRequest();
-        //    xhr.open('GET', '@Url.Content("/api/Cities")');
+        //    xhr.open('GET', '@Url.Content("~/api/Cities")');
         //    xhr.send();
         //    xhr.addEventListener('load', () => {
         //        const datas = JSON.parse(xhr.responseText);/*現在這邊回來的資料是Json格式，我們看不懂，所以要轉譯*/
@@ -34,7 +34,7 @@
         //}
 
         async function loadCity(){
-            const response = await fetch('@Url.Content("/api/Cities")')
+            const response = await fetch('@Url.Content("~/api/Cities")')
             const datas = await response.json()
             const cities = datas.map(city => `<option value='${city}'>${city}</option>`)
             selCity.innerHTML = cities.join("");
@@ -44,7 +44,7 @@
         //改寫async await fetch loadDistrict()
         //function loadDistrict() {
         //    const xhr = new XMLHttpRequest();
-        //    xhr.open('GET', `@Url.Content("/api/Districts")?city=${selCity.value}`);
+        //    xhr.open('GET', `@Url.Content("~/api/Districts")?city=${selCity.value}`);
         //    xhr.send();
         //    xhr.addEventListener('load', () => {
         //        const datas = JSON.parse(xhr.responseText);
@@ -54,7 +54,7 @@
         //    })
         //}
         async function loadDistrict() {
-            const response = await fetch(`@Url.Content("/api/Districts")?city=${selCity.value}`)
+            const response = await fetch(`@Url.Content("~/api/Districts")?city=${selCity.value}`)
             const datas=await response.json()
             const districts = datas.map(district => `<option value='${district}'>${district}</option>`)
             selDist.innerHTML = districts.join("");
@@ -64,7 +64,7 @@
         //改寫async await fetch loadRoad()
         //function loadRoad() {
         //    const xhr = new XMLHttpRequest();
-        //    xhr.open('GET', `@Url.Content("/api/roads")?siteId=${selDist.value}`);
+        //    xhr.open('GET', `@Url.Content("~/api/roads")?siteId=${selDist.value}`);
         //    xhr.send();
         //    xhr.addEventListener('load', () => {
         //        const datas = JSON.parse(xhr.responseText);
@@ -74,7 +74,7 @@
         //    })
         //}
         async function loadRoad(){
-            const response = await fetch(`@Url.Content("/api/roads")?siteId=${selDist.value}`)
+            const response = await fetch(`@Url.Content("~/api/roads")?siteId=${selDist.value}`)
             const datas=await response.json()
             const roads = datas.map(road => `<option value='${road}'>${road}</option>`)
             selRoad.innerHTML = roads.join("");

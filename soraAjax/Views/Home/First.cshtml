@@ -69,7 +69,7 @@
             //myDiv.innerHTML="Button Click"
 
             //步驟2 對伺服器發出要求(Request)
-            xhr.open('GET', '@Url.Content("/api/index")');//這個類似只有打網址，還沒按下enter
+            xhr.open('GET', '@Url.Content("~/api/index")');//這個類似只有打網址，還沒按下enter
             xhr.timeout = 3000;//timeout要設定在open及send之間，這是設定逾時停止
             xhr.send();//這步驟才等於有按下送出
 
