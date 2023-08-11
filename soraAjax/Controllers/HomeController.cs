@@ -80,5 +80,10 @@ namespace soraAjax.Controllers
         {
             return View();
         }
+
+        public IActionResult Partial1()
+        {
+            return PartialView();
+        }
     }
 }
