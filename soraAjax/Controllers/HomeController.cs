@@ -85,5 +85,11 @@ namespace soraAjax.Controllers
         {
             return PartialView();
         }
+
+        public IActionResult Partial2()
+        {
+            ViewBag.part2 = "這是來自IActionResult Partial2的內容";
+            return PartialView();
+        }
     }
 }

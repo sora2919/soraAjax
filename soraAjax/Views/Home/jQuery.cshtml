@@ -49,7 +49,8 @@
 
         //用load方式載入partial
         $('#buttonLoad').click(function () {
-            $('#divAlert').load('@Url.Content("~/home/partial1")')
+            //$('#divAlert').load('@Url.Content("~/home/partial1")')
+            $('#divAlert').load('@Url.Content("~/home/partial2")')
         })
         $('#buttonAjax').click(function () {
             $('#divAlert').text("AJAX")

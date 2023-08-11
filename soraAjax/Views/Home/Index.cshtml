@@ -7,6 +7,8 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 @Html.Partial("partial1")
+@Html.Partial("partial2")
+^^^^^這上面有呼叫partial2喔，但是因為是直接叫html，沒有透過action，所以抓不到action傳過來的資料
 
 <table id="empTable" class="table table-striped">
     <thead>
