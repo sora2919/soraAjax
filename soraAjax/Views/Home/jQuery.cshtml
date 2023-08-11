@@ -11,7 +11,9 @@
 <button id="buttonAjax" class="btn btn-warning">ajax</button>
 <button id="buttonCors" class="btn btn-danger">cors</button>
 <div class="alert alert-dark mt-3 w-50" role="alert" id="divAlert">
+    <ul>
 
+    </ul>
 </div>
 @section Scripts{
     <script>
@@ -33,9 +35,15 @@
         //回傳的是陣列，這邊都用jquery方式來做，用each印出來
         $('#buttonJson').click(function () {
             $.getJSON('@Url.Content("~/api/Cities")', function (datas) {
+                //接下來要把它展示到網頁上
+                const theUl = $('#divAlert>ul')//找到divAlert後再去抓他下一個子元素?ul //因為appand會一直更新網頁(渲染)，所以不要用在迴圈內
+                const docFrag=$(document.createDocumentFragment())//建立一個空的元素(就是不要給它有標籤，標籤讓他在下面的迴圈出現就好)
                 $.each(datas,function(idx,city){
-                console.log(city)
+                //console.log(city)
+                    const item = $('<li></li>').text(city)//把city的內容丟到<li></li>裡面 JS方法是textContent
+                    docFrag.append(item)//把子元素丟入元素中 JS方法是appendChild
                 })
+                theUl.html(docFrag)
             })
         })
         $('#buttonLoad').click(function () {
